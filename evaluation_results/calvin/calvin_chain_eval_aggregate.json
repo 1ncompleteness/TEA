@@ -1,0 +1,29 @@
+{
+  "version": "2026-04-22",
+  "envs": {
+    "calvin_d_d": {
+      "baseline": {
+        "method": "MDT K=1",
+        "avg_chain": 3.52,
+        "n_seq": 100,
+        "source": "prior existing"
+      },
+      "rerank": {
+        "method": "MDT + TEA K=4 hard argmax",
+        "avg_chain": 3.71,
+        "n_seq": 100,
+        "delta_chain": 0.19,
+        "source": "prior existing",
+        "stat_sig": "positive (binomial on 500+ task trials)"
+      }
+    }
+  },
+  "summary": [
+    {
+      "env": "calvin_d_d",
+      "baseline": "3.52 chain",
+      "rerank": "3.71 chain (+0.19)",
+      "sig": "positive"
+    }
+  ]
+}

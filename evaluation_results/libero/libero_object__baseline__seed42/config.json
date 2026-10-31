@@ -1,0 +1,17 @@
+{
+  "task_suite": "libero_object",
+  "flower_ckpt": "/workspace/flower_ckpt.safetensors",
+  "flower_config": "/workspace/flower_cfg.yaml",
+  "tea_q": null,
+  "baseline": true,
+  "K": 4,
+  "num_trials_per_task": 10,
+  "num_steps_wait": 10,
+  "rerank_mode": "soft",
+  "alpha": 2.0,
+  "sigma": 0.2,
+  "seed": 42,
+  "output_dir": "/workspace/algorithm/results",
+  "task_ids": "9",
+  "append_dir": "/workspace/algorithm/results/libero_object_flower_baseline_s42_20260423_071030"
+}

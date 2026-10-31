@@ -1,0 +1,77 @@
+{
+  "task_suite": "libero_goal",
+  "total_sr": 0.93,
+  "total_successes": 93,
+  "total_episodes": 100,
+  "per_task": {
+    "open the middle drawer of the cabinet": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "put the bowl on the stove": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "put the wine bottle on top of the cabinet": {
+      "success": 9,
+      "total": 10,
+      "sr": 0.9
+    },
+    "open the top drawer and put the bowl inside": {
+      "success": 7,
+      "total": 10,
+      "sr": 0.7
+    },
+    "put the bowl on top of the cabinet": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "push the plate to the front of the stove": {
+      "success": 9,
+      "total": 10,
+      "sr": 0.9
+    },
+    "put the cream cheese in the bowl": {
+      "success": 8,
+      "total": 10,
+      "sr": 0.8
+    },
+    "turn on the stove": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "put the bowl on the plate": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "put the wine bottle on the rack": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    }
+  },
+  "wall_minutes": 31.554263671239216,
+  "completed_tasks": 10,
+  "config": {
+    "task_suite": "libero_goal",
+    "flower_ckpt": "/workspace/flower_ckpt.safetensors",
+    "flower_config": "/workspace/flower_cfg.yaml",
+    "tea_q": null,
+    "baseline": true,
+    "K": 4,
+    "num_trials_per_task": 10,
+    "num_steps_wait": 10,
+    "rerank_mode": "soft",
+    "alpha": 2.0,
+    "sigma": 0.2,
+    "seed": 42,
+    "output_dir": "/workspace/algorithm/results",
+    "task_ids": null,
+    "append_dir": null
+  }
+}

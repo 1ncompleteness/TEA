@@ -1,0 +1,60 @@
+{
+  "total_sr": 0.99,
+  "sr": 0.99,
+  "total_successes": 99,
+  "success_count": 99,
+  "total_episodes": 100,
+  "num_episodes": 100,
+  "per_task": {
+    "pick up the alphabet soup and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the cream cheese and place it in the basket": {
+      "success": 9,
+      "total": 10,
+      "sr": 0.9
+    },
+    "pick up the salad dressing and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the bbq sauce and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the ketchup and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the tomato sauce and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the butter and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the milk and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the chocolate pudding and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the orange juice and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    }
+  }
+}
