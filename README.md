@@ -6,10 +6,10 @@
 [![Rollout Videos](https://img.shields.io/badge/Release%20v1.0.0-33%20Rollout%20Videos-2ea44f.svg)](https://github.com/1ncompleteness/TEA/releases/tag/v1.0.0)
 
 **Behrouz Barati B\*** and **Qiuyuan Huang**  
-*Department of Computer Science, California State University, Northridge, Los Angeles, CA, USA*  
+*Department of Computer Science, California State University, Northridge, Northridge, CA, USA*  
 *\*Equal contribution*
 
-Official repository for **TEA: Trustworthy Embodied Agentic Intelligence Modeling** (*14th International Conference on Robot Intelligence Technology and Applications — RiTA 2026*, Springer *Lecture Notes in Networks and Systems*).
+Official code, trained critics, and raw evaluation logs for the manuscript **TEA: Trustworthy Embodied Agentic Intelligence Modeling** (submitted to the Work-in-Progress track of RiTA 2026; not peer-reviewed yet).
 
 <p align="center">
   <img src="assets/tea_pipeline.png" alt="TEA Architecture Overview" width="96%"/>
@@ -21,9 +21,9 @@ Official repository for **TEA: Trustworthy Embodied Agentic Intelligence Modelin
 
 Embodied robotic agents deployed in unstructured physical environments face simultaneous challenges in high-dimensional action-chunk evaluation, multi-agent social coordination, and calibrated out-of-distribution (OOD) safety. **TEA** introduces a modular three-layer framework that upgrades frozen pretrained embodied behavior priors (**MDT-V**, **FLOWER VLA**, and **Habitat 3.0 DD-PPO**) at deployment time **without fine-tuning a single parameter of the underlying policy**:
 
-1. **Agentic State Factorization (ASF):** Low-rank multilinear critic (`ActionChunkQNetwork` / `QEnsemble`) that evaluates high-dimensional state and multi-step action chunks via element-wise Hadamard mode fusion in $O(R(d_s + C d_a) + M R^2)$ parameters and operations instead of exponential tensor grids.
-2. **Relational Sparse Graphical Games (RSGG):** Neighbor-conditioned state factorization along sparse spatial interaction graphs $\mathcal{G} = (\mathcal{N}, \mathcal{E})$, enabling coordinated social navigation without joint action-space blowup.
-3. **Trustworthy Policy Execution (TPE):** Offline **Calibrated Conservative Q-Learning (Cal-QL)** critics paired with **Soft Best-of-$N$** Gaussian kernel test-time reranking ($K=4$, $\alpha=2.0$, $\sigma=0.2$) and explicit held-out trustworthiness diagnostics (**ECE**, **Cal-QL Coverage**, **OOD Margin $\Delta Q$**, **Bellman Residual $\delta$**, and **$\varepsilon_{\text{QRE}}$**).
+1. **Adaptive State Function (ASF):** Low-rank multilinear critic (`ActionChunkQNetwork` / `QEnsemble`) that evaluates high-dimensional state and multi-step action chunks via element-wise Hadamard mode fusion in $O(R(d_s + C d_a) + M R^2)$ parameters and operations instead of exponential tensor grids.
+2. **Robust Stochastic Game Graph (RSGG):** Neighbor-conditioned state factorization along sparse spatial interaction graphs $\mathcal{G} = (\mathcal{N}, \mathcal{E})$, enabling coordinated social navigation without joint action-space blowup.
+3. **Trustworthy Policy Extraction (TPE):** Offline **Calibrated Q-Learning (Cal-QL)** critics paired with test-time reranking of $K=4$ prior samples (**Soft Best-of-$N$** with $\alpha=2.0$, $\sigma=0.2$ on Habitat and LIBERO; hard $Q$-argmax on CALVIN) and trust diagnostics (**ECE**, **Cal-QL Coverage**, **OOD Margin $\Delta Q$**, **Bellman Residual $\delta$**, and **$\varepsilon_{\text{QRE}}$**).
 
 ---
 
@@ -36,60 +36,71 @@ Embodied robotic agents deployed in unstructured physical environments face simu
 
 > **Full Rollout Videos (`v1.0.0` Release):** All **33 captioned `.mp4` evaluation rollout videos** across CALVIN Scene D, Habitat 3.0 Social-Nav, and LIBERO Manipulation are hosted in [**GitHub Release `v1.0.0`**](https://github.com/1ncompleteness/TEA/releases/tag/v1.0.0).
 
-### 1. CALVIN Long-Horizon Language-Conditioned Manipulation (`D -> D`, 1,000 Chains)
+All numbers below match the manuscript tables and the raw logs in [`evaluation_results/`](evaluation_results). Differences between the frozen prior ($K=1$) and +TEA ($K=4$) are small; none is claimed as statistically significant.
+
+### 1. CALVIN Long-Horizon Language-Conditioned Manipulation (`D -> D`)
 
 <p align="center">
   <img src="assets/calvin_led.png" alt="CALVIN Scene D LED Task" width="49%"/>
   <img src="assets/calvin_lift.png" alt="CALVIN Scene D Lift Blue Block Task" width="49%"/>
 </p>
 
-| Method | 1/5 (%) | 2/5 (%) | 3/5 (%) | 4/5 (%) | 5/5 (%) | Avg. Chain Length $\uparrow$ |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| HULC | 82.7 | 64.9 | 50.4 | 38.5 | 28.3 | 2.65 |
-| RoboFlamingo | 82.4 | 61.9 | 46.6 | 33.1 | 23.5 | 2.48 |
-| Susie | 87.0 | 69.0 | 49.0 | 38.0 | 26.0 | 2.69 |
-| GR-1 | 85.4 | 71.2 | 59.6 | 49.7 | 40.1 | 3.06 |
-| MDT-V *(published reference)* | 93.7 | 84.5 | 74.1 | 64.4 | 55.6 | 3.52 |
-| **TEA ($K=4$, MDT-V prior)** | **95.0** | **86.0** | **74.5** | 63.7 | 51.9 | **3.71** |
+Published baselines use 1,000 LH-MTLC chains. Our same-checkpoint `mdtv-1-d` rerun ($K=1$) and +TEA use **100 chains** each (`num_sequences=100`), so they are not directly comparable to the published rows. On CALVIN, +TEA picks the candidate with the highest $Q$ (hard argmax over $K=4$). Per-position rates of the $K=1$ rerun were not logged.
 
-### 2. Habitat 3.0 Multi-Agent Social Navigation (500 Paired Episodes, 5 Seeds)
+| Method | 1/5 (%) | 2/5 (%) | 3/5 (%) | 4/5 (%) | 5/5 (%) | Avg. Chain Length |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| GCBC *(published)* | 64.7 | 28.4 | 12.2 | 4.9 | 1.3 | 1.11 |
+| MCIL *(published)* | 76.4 | 48.8 | 30.1 | 18.1 | 9.3 | 1.82 |
+| HULC *(published)* | 82.5 | 66.8 | 52.0 | 39.3 | 27.5 | 2.68 |
+| LCD *(published)* | 88.7 | 69.9 | 54.5 | 42.7 | 32.2 | 2.88 |
+| MT-ACT *(published)* | 88.4 | 72.2 | 57.2 | 44.9 | 35.3 | 2.98 |
+| MDT *(published)* | 93.3 | 82.4 | 71.5 | 60.9 | 51.1 | 3.59 |
+| MDT-V *(published)* | 93.7 | 84.5 | 74.1 | 64.4 | 55.6 | 3.72 |
+| MDT-V $K=1$ *(our rerun, 100 chains)* | – | – | – | – | – | 3.52 |
+| MDT-V + TEA $K=4$ *(ours, 100 chains)* | 95.0 | 84.0 | 73.0 | 64.0 | 55.0 | 3.71 |
+
+### 2. Habitat 3.0 Multi-Agent Social Navigation
 
 <p align="center">
   <img src="assets/habitat_social_nav.png" alt="Habitat 3.0 Social-Nav Find and Follow" width="90%"/>
 </p>
 
-| Arm | Finding SR $\uparrow$ | Follow Rate $\uparrow$ | Collision Rate $\downarrow$ | Steps-to-Encounter $\downarrow$ |
+Paired evaluation of `social_nav_latest.pth` (mean ± SE). $K=1$ and +TEA: 5 seeds × 30 episodes ($n=150$). Neighbor-blind ablation: 2 seeds × 30 episodes ($n=60$). The $K=1$ vs. +TEA differences lie within one standard error.
+
+| Arm | Finding success $S$ $\uparrow$ | Following rate $F$ $\uparrow$ | Collision rate $\downarrow$ | Steps-to-encounter $\downarrow$ |
 | :--- | :---: | :---: | :---: | :---: |
-| DD-PPO Baseline ($K=1$) | $0.34 \pm 0.04$ | $0.16 \pm 0.03$ | $0.34 \pm 0.05$ | $248 \pm 29$ |
-| TEA Neighbor-Blind ($K=4$, RSGG ablated) | $0.45 \pm 0.05$ | $0.18 \pm 0.03$ | $0.30 \pm 0.04$ | $201 \pm 24$ |
-| **TEA Full ($K=4$, RSGG + Cal-QL)** | **$0.46 \pm 0.05$** *(+35%)* | **$0.25 \pm 0.04$** *(+56%)* | **$0.28 \pm 0.04$** *(-18%)* | **$195 \pm 22$** |
+| DD-PPO $K=1$ (frozen prior) | 0.68 ± 0.04 | 0.23 ± 0.02 | 0.55 ± 0.04 | 557 |
+| DD-PPO + TEA $K=4$ | 0.69 ± 0.04 | 0.25 ± 0.02 | 0.52 ± 0.04 | 502 |
+| + TEA $K=4$, neighbor-blind (RSGG features zeroed) | 0.67 ± 0.06 | 0.18 ± 0.03 | 0.50 ± 0.06 | 603 |
 
-*Removing humanoid neighbor relational features (`Neighbor-Blind`) collapses post-encounter following from **0.25** down to **0.18** (-28% relative), directly isolating the multi-agent contribution of RSGG.*
-
-### 3. LIBERO Robotic Manipulation Suites (FLOWER VLA Prior, 3,600 Paired Rollouts/Arm)
+### 3. LIBERO Robotic Manipulation Suites (FLOWER Prior)
 
 <p align="center">
   <img src="assets/libero_drawer.png" alt="LIBERO Goal Open Middle Drawer" width="49%"/>
   <img src="assets/libero_moka.png" alt="LIBERO Long Turn on Stove and Place Moka Pot" width="49%"/>
 </p>
 
-| Suite | Seeds $\times$ Tasks $\times$ Demos | FLOWER Baseline ($K=1$) | **TEA ($K=4$, Soft BoN)** | $\Delta$ (Paired Test) |
-| :--- | :---: | :---: | :---: | :---: |
-| **LIBERO-Spatial** | $6 \times 10 \times 20$ (1,200 eps) | $87.2\% \pm 1.6\%$ | **$89.3\% \pm 1.8\%$** | **+2.2 pp** ($p = 0.017$) |
-| **LIBERO-Object** | $6 \times 10 \times 20$ (1,200 eps) | $99.3\% \pm 0.5\%$ | **$100.0\% \pm 0.0\%$** *(600/600)* | **+0.7 pp** ($p = 0.008$) |
-| **LIBERO-Goal** | $3 \times 10 \times 20$ (600 eps) | $95.0\% \pm 0.0\%$ | $94.7\% \pm 0.6\%$ | -0.3 pp *(ceiling parity)* |
-| **LIBERO-Long (`libero_10`)** | $3 \times 10 \times 20$ (600 eps) | $91.2\% \pm 1.0\%$ | $90.7\% \pm 0.8\%$ | -0.5 pp *(statistical parity)* |
+Paired `flower_libero` reruns: Spatial and Object use 6 seeds × 10 tasks × 10 episodes ($n=600$); Goal and Long use 3 seeds ($n=300$). No single-suite difference is significant under a paired exact test (Object: exact two-sided McNemar $p=0.125$).
 
-### 4. Held-Out Trustworthiness & Calibration Diagnostics
+| Suite | FLOWER $K=1$ (%) | + TEA $K=4$ (%) | $\Delta$ (pp) |
+| :--- | :---: | :---: | :---: |
+| LIBERO-Spatial | 88.3 (530/600) | 89.3 (536/600) | +1.0 |
+| LIBERO-Object | 99.3 (596/600) | 100.0 (600/600) | +0.7 |
+| LIBERO-Goal | 94.0 | 92.7 | −1.3 |
+| LIBERO-Long (`libero_10`) | 94.3 | 91.7 | −2.7 |
 
-| Benchmark / Suite | Held-Out $N$ | ECE | **Cal-QL Cov** $\uparrow$ | **$\Delta Q$ Margin** $\uparrow$ | Bellman $\delta_{95}$ | $\varepsilon_{\text{QRE}}$ |
+### 4. Trust Diagnostics
+
+Computed by [`compute_trust_calibration.py`](code/trustworthy_calibration/compute_trust_calibration.py) on a random 10% subset of each critic's **training** buffer ($N$ below). These rows are in-sample diagnostics, not held-out estimates. $\hat\varepsilon = 2\hat\delta + \tau \log K$ with $\tau=2.0$, $K=4$ is an empirical proxy over the $K$ sampled candidates, not a certificate. Habitat uses dense rewards, so its magnitudes are not comparable to the manipulation rows.
+
+| Benchmark / Suite | $N$ | ECE | Cov | $\Delta Q$ | $\hat\delta$ (95th pct.) | $\hat\varepsilon$ |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| CALVIN (`D -> D`) | 20,000 | 1.06 | **1.00** | +1.64 | 0.36 | 3.49 |
-| Habitat 3.0 Social-Nav | 23,713 | 114.20 | **1.00** | +60.74 | 5.05 | 12.87 |
-| LIBERO-Spatial | 6,225 | 0.52 | **1.00** | +0.83 | 0.07 | 2.92 |
-| LIBERO-Object | 7,450 | 0.51 | **1.00** | +0.87 | 0.07 | 2.91 |
-| LIBERO-Goal | 6,372 | 0.52 | **1.00** | +0.88 | 0.07 | 2.91 |
-| LIBERO-Long (`libero_10`) | 13,809 | 0.65 | **1.00** | +1.05 | 0.14 | 3.05 |
+| CALVIN (`D -> D`) | 20,000 | 1.06 | 1.00 | 1.64 | 0.36 | 3.49 |
+| Habitat 3.0 Social-Nav | 23,713 | 114.20 | 1.00 | 60.74 | 5.05 | 12.87 |
+| LIBERO-Spatial | 6,225 | 0.52 | 1.00 | 0.83 | 0.07 | 2.92 |
+| LIBERO-Object | 7,450 | 0.50 | 1.00 | 0.94 | 0.04 | 2.84 |
+| LIBERO-Goal | 6,372 | 0.51 | 1.00 | 1.08 | 0.07 | 2.92 |
+| LIBERO-Long (`libero_10`) | 13,809 | 0.35 | 1.00 | 1.02 | 0.10 | 2.97 |
 
 ---
 
@@ -199,7 +210,7 @@ python code/trustworthy_calibration/compute_trust_calibration.py \
   ```
 - **CALVIN `D -> D` Q-Network Training & Chain Aggregation:**
   - Build feature cache via `code/calvin/training/cache_calvin_data_chunked.py` and train via `code/calvin/training/train_tea_mdt.py`.
-  - *Transparency disclosure:* As documented in the paper, no same-checkpoint $K=1$ rerun was executed for CALVIN (published MDT-V scores serve as the reference), and `code/calvin/testing/run_mdt_tea_eval.sh` documents the invocation flags (`TEA_Q_PATH`, `TEA_K`) consumed by an evaluation-loop hook inside a local MDT checkout that is not redistributed here. All raw chain records backing Table 1 are archived in `evaluation_results/calvin/calvin_chain_eval_aggregate.json`.
+  - *Transparency disclosure:* `code/calvin/testing/run_mdt_eval.sh` ($K=1$) and `run_mdt_tea_eval.sh` (+TEA) both run 100 chains. The +TEA script passes `TEA_Q_PATH`/`TEA_K` to an evaluation-loop hook inside a local MDT checkout that is **not** redistributed here, so the CALVIN +TEA arm cannot yet be rerun from this repository alone. `evaluation_results/calvin/calvin_chain_eval_aggregate.json` stores only the summary (avg. chain length 3.52 for $K=1$ and 3.71 for +TEA, 100 chains each), not per-chain records.
 
 ---
 
@@ -208,13 +219,12 @@ python code/trustworthy_calibration/compute_trust_calibration.py \
 If you find TEA useful in your research, please cite:
 
 ```bibtex
-@inproceedings{baratib2026tea,
-  author    = {Barati B, Behrouz and Huang, Qiuyuan},
-  title     = {{TEA}: Trustworthy Embodied Agentic Intelligence Modeling},
-  booktitle = {Robot Intelligence Technology and Applications 14 (RiTA 2026),
-               Lecture Notes in Networks and Systems},
-  publisher = {Springer},
-  year      = {2026}
+@misc{baratib2026tea,
+  author = {Barati B, Behrouz and Huang, Qiuyuan},
+  title  = {{TEA}: Trustworthy Embodied Agentic Intelligence Modeling},
+  year   = {2026},
+  note   = {Manuscript submitted to the Work-in-Progress track of RiTA 2026},
+  url    = {https://github.com/1ncompleteness/TEA}
 }
 ```
 
