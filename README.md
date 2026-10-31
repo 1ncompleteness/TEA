@@ -1,4 +1,4 @@
-# TEA: Trustworthy Embodied Agentic Intelligence Modeling
+# TEA: Trustworthy Embodied Agents via Value-Guided Reranking of Behavior Priors
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-3776AB.svg)](requirements.txt)
@@ -9,7 +9,7 @@
 *Department of Computer Science, California State University, Northridge, Northridge, CA, USA*  
 *\*Equal contribution*
 
-Official code, trained critics, and raw evaluation logs for the manuscript **TEA: Trustworthy Embodied Agentic Intelligence Modeling** (submitted to the Work-in-Progress track of RiTA 2026; not peer-reviewed yet).
+Official code, trained critics, and raw evaluation logs for the manuscript **TEA: Trustworthy Embodied Agents via Value-Guided Reranking of Behavior Priors** (submitted to the Work-in-Progress track of RiTA 2026; not peer-reviewed yet).
 
 <p align="center">
   <img src="assets/tea_pipeline.png" alt="TEA Architecture Overview" width="96%"/>
@@ -221,7 +221,7 @@ If you find TEA useful in your research, please cite:
 ```bibtex
 @misc{baratib2026tea,
   author = {Barati B, Behrouz and Huang, Qiuyuan},
-  title  = {{TEA}: Trustworthy Embodied Agentic Intelligence Modeling},
+  title  = {{TEA}: Trustworthy Embodied Agents via Value-Guided Reranking of Behavior Priors},
   year   = {2026},
   note   = {Manuscript submitted to the Work-in-Progress track of RiTA 2026},
   url    = {https://github.com/1ncompleteness/TEA}
