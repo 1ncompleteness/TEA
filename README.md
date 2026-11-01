@@ -7,7 +7,7 @@
 
 **Behrouz Barati B\*** and **Qiuyuan Huang**  
 *Department of Computer Science, California State University, Northridge, Northridge, CA, USA*  
-*\*Equal contribution*
+*\*Corresponding author*
 
 Official code, trained critics, and raw evaluation logs for the manuscript **TEA: Trustworthy Embodied Agents via Value-Guided Reranking of Behavior Priors** (submitted to the Work-in-Progress track of RiTA 2026; not peer-reviewed yet).
 
