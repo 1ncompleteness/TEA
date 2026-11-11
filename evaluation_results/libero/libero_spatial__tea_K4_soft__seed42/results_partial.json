@@ -1,0 +1,77 @@
+{
+  "task_suite": "libero_spatial",
+  "total_sr": 0.89,
+  "total_successes": 89,
+  "total_episodes": 100,
+  "per_task": {
+    "pick up the black bowl between the plate and the ramekin and place it on the plate": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the black bowl next to the ramekin and place it on the plate": {
+      "success": 9,
+      "total": 10,
+      "sr": 0.9
+    },
+    "pick up the black bowl from table center and place it on the plate": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the black bowl on the cookie box and place it on the plate": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate": {
+      "success": 9,
+      "total": 10,
+      "sr": 0.9
+    },
+    "pick up the black bowl on the ramekin and place it on the plate": {
+      "success": 1,
+      "total": 10,
+      "sr": 0.1
+    },
+    "pick up the black bowl next to the cookie box and place it on the plate": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the black bowl on the stove and place it on the plate": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the black bowl next to the plate and place it on the plate": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the black bowl on the wooden cabinet and place it on the plate": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    }
+  },
+  "wall_minutes": 3.4307987292607627,
+  "completed_tasks": 10,
+  "config": {
+    "task_suite": "libero_spatial",
+    "flower_ckpt": "/workspace/flower_ckpt.safetensors",
+    "flower_config": "/workspace/flower_cfg.yaml",
+    "tea_q": "/workspace/tea_q.pt",
+    "baseline": false,
+    "K": 4,
+    "num_trials_per_task": 10,
+    "num_steps_wait": 10,
+    "rerank_mode": "soft",
+    "alpha": 2.0,
+    "sigma": 0.2,
+    "seed": 42,
+    "output_dir": "/workspace/algorithm/results",
+    "task_ids": "9",
+    "append_dir": "/workspace/algorithm/results/libero_spatial_flower_tea_K4_soft_s42_20260423_083223"
+  }
+}

@@ -1,0 +1,12 @@
+# Core dependencies for multilinear Cal-QL Q-networks, offline training, and trust calibration
+torch>=2.1.0
+numpy>=1.24.0
+matplotlib>=3.7.0
+pillow>=10.0.0
+imageio>=2.31.0
+h5py>=3.9.0
+
+# Note: Full simulator rollouts require benchmark-specific environments:
+# - Habitat 3.0 Social-Nav: python 3.9, habitat-sim==0.3.3, habitat-lab==0.3.3
+# - LIBERO + FLOWER VLA:    python 3.10, mujoco==2.3.7, robosuite==1.4.0, transformers==4.40.1
+# - CALVIN + MDT-V:         calvin_env (PyBullet) via https://github.com/intuitive-robots/mdt_policy

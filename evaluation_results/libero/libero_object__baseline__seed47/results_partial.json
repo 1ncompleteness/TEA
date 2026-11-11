@@ -1,0 +1,77 @@
+{
+  "task_suite": "libero_object",
+  "total_sr": 0.99,
+  "total_successes": 99,
+  "total_episodes": 100,
+  "per_task": {
+    "pick up the alphabet soup and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the cream cheese and place it in the basket": {
+      "success": 9,
+      "total": 10,
+      "sr": 0.9
+    },
+    "pick up the salad dressing and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the bbq sauce and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the ketchup and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the tomato sauce and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the butter and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the milk and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the chocolate pudding and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    },
+    "pick up the orange juice and place it in the basket": {
+      "success": 10,
+      "total": 10,
+      "sr": 1.0
+    }
+  },
+  "wall_minutes": 2.3119924783706667,
+  "completed_tasks": 10,
+  "config": {
+    "task_suite": "libero_object",
+    "flower_ckpt": "/workspace/flower_ckpt.safetensors",
+    "flower_config": "/workspace/flower_cfg.yaml",
+    "tea_q": null,
+    "baseline": true,
+    "K": 4,
+    "num_trials_per_task": 10,
+    "num_steps_wait": 10,
+    "rerank_mode": "soft",
+    "alpha": 2.0,
+    "sigma": 0.2,
+    "seed": 47,
+    "output_dir": "/workspace/algorithm/results",
+    "task_ids": "9",
+    "append_dir": "/workspace/algorithm/results/libero_object_flower_baseline_s47_20260423_214557"
+  }
+}

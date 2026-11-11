@@ -1,0 +1,22 @@
+{
+  "ckpt": "ckpt/social_nav_latest.pth",
+  "config": null,
+  "demos_npz": "results/v3_demos_101/demos.npz,results/v3_demos_102/demos.npz,results/v3_demos_103/demos.npz,results/v3_demos_104/demos.npz,results/v3_demos_105/demos.npz",
+  "neighbor_blind": true,
+  "collect_only": false,
+  "habitat_seed": null,
+  "shuffle_episodes": false,
+  "num_demo_episodes": 100,
+  "max_episode_steps": 500,
+  "train_steps": 50000,
+  "batch_size": 256,
+  "lr": 0.0003,
+  "n_ensemble": 4,
+  "cql_alpha": 0.01,
+  "gamma": 0.99,
+  "seed": 42,
+  "device": "cuda",
+  "output_dir": "results/v3_q_blind",
+  "state_dim": 39,
+  "action_dim": 2
+}
