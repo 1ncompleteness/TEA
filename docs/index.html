@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TEA: Trustworthy Embodied Agents via Value-Guided Reranking of Behavior Priors</title>
+  <meta name="description" content="Official project page for TEA: Trustworthy Embodied Agents via Value-Guided Reranking of Behavior Priors. Code, trained critics, evaluation logs, posters, and 33 simulation rollout videos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#top" class="brand"><span class="brand-dot"></span><span>TEA</span></a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#overview">Overview</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#videos">Videos (33)</a>
+        <a href="#diagnostics">Diagnostics</a>
+        <a href="#quickstart">Quickstart</a>
+        <a href="#bibtex">BibTeX</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div class="venue-pill">RiTA 2026 &middot; Work-in-Progress</div>
+        <h1>TEA: Trustworthy Embodied Agents via Value-Guided Reranking of Behavior Priors</h1>
+
+        <div class="authors">
+          <a href="https://1ncompleteness.github.io/" target="_blank" rel="noopener">Behrouz Barati B</a>
+          <span class="sep">&middot;</span>
+          <a href="https://github.com/EnnoHuang" target="_blank" rel="noopener">Enno Qiuyuan Huang<sup>*</sup></a>
+        </div>
+        <div class="affiliation">
+          Department of Computer Science, California State University, Northridge, CA 91330, USA
+          <small><sup>*</sup>Corresponding author</small>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn-pill primary" href="https://github.com/1ncompleteness/TEA" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.65 7.65 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+            Code Repository
+          </a>
+          <a class="btn-pill accent" href="./assets/TEA_Poster_A0.pdf" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Poster (A0 PDF)
+          </a>
+          <a class="btn-pill" href="./assets/TEA_Poster_16x9.pdf" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Summary Slide (16:9 PDF)
+          </a>
+          <a class="btn-pill" href="#videos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Demo Videos (33)
+          </a>
+          <a class="btn-pill" href="https://github.com/1ncompleteness/TEA/tree/main/trained_checkpoints" target="_blank" rel="noopener">
+            Checkpoints
+          </a>
+          <a class="btn-pill" href="https://github.com/1ncompleteness/TEA/tree/main/evaluation_results" target="_blank" rel="noopener">
+            Eval Logs
+          </a>
+          <a class="btn-pill" href="#bibtex">
+            BibTeX
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture Overview (Fig. 1) -->
+    <section id="overview" class="section">
+      <div class="container">
+        <h2 class="section-title">Architecture Overview</h2>
+        <p class="section-lead">
+          TEA pairs a frozen pretrained Behavior Prior (BP) with a compact offline-trained multilinear critic that reranks a small batch of BP candidates at deployment. No parameter of the prior is fine-tuned, and every executed action is a sample from the frozen prior.
+        </p>
+
+        <div class="figure-card">
+          <img src="./assets/tea_pipeline.png" alt="TEA three-stage architecture diagram showing Stage 1 Input Encoding, Stage 2 RSGG, and Stage 3 Policy Learning and Reranking" />
+          <p class="figure-caption">
+            <strong>Figure 1 &mdash; TEA Overview.</strong>
+            <strong>Stage 1:</strong> raw camera images and language instructions feed only the frozen BP (&ldquo;teacher&rdquo;), which also receives proprioception if it is conditioned on it (dashed); the critic receives a compact state vector $s$.
+            <strong>Stage 2:</strong> Robust Stochastic Game Graph (RSGG) over interacting agents (temporal sub-agents are conceptual only).
+            <strong>Stage 3:</strong> (A) offline Cal-QL training of the multilinear Hadamard critic; (B) inference-time Soft Best-of-$N$ reranking across $K=4$ frozen BP candidates (plus anchor on LIBERO and Habitat).
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card teal">
+            <h3>Stage 1 &middot; Input Encoding</h3>
+            <p>Raw pixels and text go exclusively to the frozen prior (<strong>MDT-V</strong>, <strong>FLOWER</strong>, or <strong>DD-PPO</strong>). The critic reads only a compact state $s \in \mathbb{R}^{d_s}$: CALVIN ($d_s{=}39, C{=}10$), LIBERO ($d_s{=}15, C{=}1$), Habitat ($d_s{=}39, C{=}1$).</p>
+          </div>
+          <div class="card amber">
+            <h3>Stage 2 &middot; RSGG Graph Structure</h3>
+            <p>Each agent&rsquo;s critic conditions only on local graph neighbors, $O(n|\mathcal{A}|^{d+1})$ instead of $O(|\mathcal{A}|^n)$. In Habitat 3.0 ($n{=}2, d{=}1$), the partner humanoid&rsquo;s 7-D features enter the robot critic&rsquo;s state.</p>
+          </div>
+          <div class="card blue">
+            <h3>Stage 3 &middot; Trustworthy Policy Extraction</h3>
+            <p>(A) Offline Cal-QL training of the multilinear Q-network with zero online interaction. (B) Anchored Soft Best-of-$N$ reranking selects among $K{=}4$ frozen prior samples at runtime without optimizing against the critic.</p>
+          </div>
+        </div>
+
+        <div class="scope-box" aria-label="Trustworthiness scope">
+          <div class="scope-item">
+            <span class="badge-num">1</span>
+            <div><strong>Prior-constrained execution:</strong> every executed action is a sample drawn from the frozen behavior prior (holds by construction).</div>
+          </div>
+          <div class="scope-item">
+            <span class="badge-num">2</span>
+            <div><strong>Auditable critic separation:</strong> offline critics rank demonstrated actions above random chunks on average (verified in-sample; not a formal safety guarantee).</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Abstract -->
+    <section class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Abstract</h2>
+        <div class="abstract-box">
+          Generative imitation policies, or Behavior Priors (BPs), produce realistic action chunks for embodied agents but offer no value estimate to choose among them. We present <strong>TEA</strong> (<em>Trustworthy Embodied Agents</em>), an offline pipeline that pairs a frozen pretrained BP with a compact Hadamard-product Q-network trained with a Calibrated Q-Learning (Cal-QL) style conservative loss. At deployment, the BP proposes a few candidate action chunks and the critic reranks them, using a Soft Best-of-$N$ rule anchored to the BP&rsquo;s reference action (a hard $Q$-argmax on CALVIN), so every executed action is a BP sample. TEA has three stages: <em>input encoding</em>, which routes raw images and language only to the BP and a compact state to a rank-$R$ multilinear critic; a <em>Robust Stochastic Game Graph (RSGG)</em> that conditions each agent&rsquo;s critic on its interaction partners; and <em>Trustworthy Policy Extraction (TPE)</em>. Without fine-tuning the prior, TEA raises the CALVIN D&rarr;D average chain length of MDT-V from $3.52$ to $3.71$, raises FLOWER&rsquo;s success on LIBERO-Spatial and LIBERO-Object to $89.3\%$ and $100\%$, and moves all four Habitat 3.0 Social-Nav metrics of a DD-PPO prior in the favorable direction, while every critic scores demonstrated actions above random ones on average.
+        </div>
+      </div>
+    </section>
+
+    <!-- Method & Hyperparameters -->
+    <section id="method" class="section">
+      <div class="container">
+        <h2 class="section-title">Method &amp; Architecture Details</h2>
+        <p class="section-lead">
+          All manipulation critics share the multilinear-gating <a href="https://github.com/1ncompleteness/TEA/blob/main/code/calvin/training/train_tea_mdt.py" target="_blank" rel="noopener"><code>ActionChunkQNetwork</code></a> architecture, while Habitat uses a four-member <a href="https://github.com/1ncompleteness/TEA/blob/main/code/habitat/training/pa_rl.py" target="_blank" rel="noopener"><code>QEnsemble</code></a>.
+        </p>
+
+        <div class="grid-2">
+          <div>
+            <div class="eq-card">
+              <div class="eq-label">Multilinear Hadamard Critic</div>
+              $$Q_i(s, a) = g\!\left(\prod_{m=1}^{M} \psi_m\!\big(\phi_s(s) \odot \phi_a(a)\big)\right)$$
+              <p style="margin:8px 0 0;font-size:0.9rem;color:var(--slate-600);">
+                $O(R(d_s + C d_a) + M R^2)$ parameters ($M{=}3$ linear-$\tanh$ factors, rank $R{=}512$ on manipulation and $R{=}256$ on Habitat).
+              </p>
+            </div>
+            <div class="eq-card">
+              <div class="eq-label">Offline Cal-QL Objective &amp; Anchored Soft Best-of-$N$</div>
+              $$\mathcal{L}(Q_i) = \mathbb{E}\!\Big[(Q_i(s,a)-y)^2 + \lambda\big[Q_i(s,a_{\text{rnd}}) - \max(\text{sg}[Q_i(s,a)], V_{\text{ref}})\big]_+\Big]$$
+              $$k^\star = \arg\max_{k}\!\left\{-\frac{1}{2\sigma^2}\|a^{(k)} - a^{(0)}\|_2^2 + \frac{1}{\alpha} Q_i(s, a^{(k)})\right\}$$
+              <p style="margin:8px 0 0;font-size:0.9rem;color:var(--slate-600);">
+                Deterministic anchored rule ($\alpha{=}2, \sigma{=}0.2$ on LIBERO &amp; Habitat; hard $Q$-argmax on CALVIN) scoring $K{=}4$ BP candidates in $O(KMR^2)$ critic cost per replanning step.
+              </p>
+            </div>
+          </div>
+
+          <div class="table-wrap" style="align-self:start;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hyperparameter</th>
+                  <th>CALVIN</th>
+                  <th>LIBERO (per suite)</th>
+                  <th>Habitat 3.0</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Frozen BP</td><td>MDT-V (<code>mdtv-1-d</code>)</td><td>FLOWER (<code>flower_libero</code>)</td><td>DD-PPO (<code>social_nav</code>)</td></tr>
+                <tr><td>State dim. $d_s$</td><td>39 (15 prop + 24 scene)</td><td>15 (EE + gripper + joints)</td><td>39 (7 neighbor + 32 depth)</td></tr>
+                <tr><td>Action dim. $d_a$, chunk $C$</td><td>7, 10</td><td>7, 1</td><td>2, 1</td></tr>
+                <tr><td>Rank $R$, projections $M$</td><td>512, 3</td><td>512, 3</td><td>256, 3 (4-ensemble)</td></tr>
+                <tr><td>Critic parameters</td><td>1.29M</td><td>1.26M</td><td>4 &times; 0.37M</td></tr>
+                <tr><td>Cal-QL weight $\lambda$</td><td>0.5</td><td>0.5</td><td>0.01</td></tr>
+                <tr><td>Adam steps / batch</td><td>50,000 / 64</td><td>50,000 / 64</td><td>50,000 / 256</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benchmark Results -->
+    <section id="results" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Paired Same-Checkpoint Benchmark Results</h2>
+        <p class="section-lead">
+          Every benchmark compares the exact same frozen Behavior Prior checkpoint ($K{=}1$) against itself plus TEA reranking ($K{=}4$) on identical evaluation streams. Published baselines serve as external context only; none of the single-suite or benchmark differences is claimed as statistically significant.
+        </p>
+
+        <div class="grid-2" style="align-items:center;margin-bottom:24px;">
+          <div class="figure-card">
+            <img src="./assets/fig_results_summary.png" alt="Paired same-checkpoint K=1 vs +TEA K=4 across CALVIN, LIBERO, and Habitat 3.0" />
+          </div>
+          <div class="figure-card">
+            <img src="./assets/fig_calvin_chain.png" alt="CALVIN D->D per-position chain success from 1/5 to 5/5" />
+          </div>
+        </div>
+
+        <!-- CALVIN -->
+        <div class="bench-block calvin">
+          <div class="bench-header">
+            <h3>1. CALVIN D&rarr;D Long-Horizon Chains (MDT-V Prior)</h3>
+            <span class="bench-tag">Hard Q-argmax &middot; 100 paired chains</span>
+          </div>
+          <p style="margin:0 0 14px;color:var(--slate-600);font-size:0.95rem;">
+            Same-checkpoint <code>mdtv-1-d</code> rerun reaches <strong>3.52</strong> avg. chain length ($K{=}1$, 100 chains); adding TEA raises average length to <strong>3.71</strong> (<strong>+0.19</strong>, exceeding published MDT at 3.59). Published baselines use 1,000 chains and are not directly comparable to the 100-chain paired runs.
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Method</th><th>1/5 (%)</th><th>2/5 (%)</th><th>3/5 (%)</th><th>4/5 (%)</th><th>5/5 (%)</th><th>Avg. Chain Length</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>GCBC <em>(published, 1k)</em></td><td>64.7</td><td>28.4</td><td>12.2</td><td>4.9</td><td>1.3</td><td>1.11</td></tr>
+                <tr><td>MCIL <em>(published, 1k)</em></td><td>76.4</td><td>48.8</td><td>30.1</td><td>18.1</td><td>9.3</td><td>1.82</td></tr>
+                <tr><td>HULC <em>(published, 1k)</em></td><td>82.5</td><td>66.8</td><td>52.0</td><td>39.3</td><td>27.5</td><td>2.68</td></tr>
+                <tr><td>LCD <em>(published, 1k)</em></td><td>88.7</td><td>69.9</td><td>54.5</td><td>42.7</td><td>32.2</td><td>2.88</td></tr>
+                <tr><td>MT-ACT <em>(published, 1k)</em></td><td>88.4</td><td>72.2</td><td>57.2</td><td>44.9</td><td>35.3</td><td>2.98</td></tr>
+                <tr><td>MDT <em>(published, 1k)</em></td><td>93.3</td><td>82.4</td><td>71.5</td><td>60.9</td><td>51.1</td><td>3.59</td></tr>
+                <tr><td>MDT-V <em>(published, 1k)</em></td><td>93.7</td><td>84.5</td><td>74.1</td><td>64.4</td><td>55.6</td><td>3.72</td></tr>
+                <tr class="row-soft"><td>MDT-V $K=1$ <em>(our rerun, 100 chains)</em></td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>3.52</td></tr>
+                <tr class="row-teal"><td>MDT-V + TEA $K=4$ <em>(ours, 100 chains)</em></td><td>95.0</td><td>84.0</td><td>73.0</td><td>64.0</td><td>55.0</td><td>3.71 (+0.19)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- LIBERO -->
+        <div class="bench-block libero">
+          <div class="bench-header">
+            <h3>2. LIBERO Manipulation Suites (FLOWER Prior)</h3>
+            <span class="bench-tag">Soft BoN (&alpha;=2, &sigma;=0.2) &middot; K=4 + anchor</span>
+          </div>
+          <div class="grid-2" style="align-items:center;">
+            <div>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Method</th><th>Spatial (%)</th><th>Object (%)</th><th>Long (<code>libero_10</code>) (%)</th></tr></thead>
+                  <tbody>
+                    <tr><td>OpenVLA <em>(published)</em></td><td>84.7</td><td>88.4</td><td>53.7</td></tr>
+                    <tr><td>Octo, fine-tuned <em>(published)</em></td><td>78.9</td><td>85.7</td><td>51.1</td></tr>
+                    <tr><td>Diffusion Policy <em>(published)</em></td><td>78.3</td><td>92.5</td><td>50.5</td></tr>
+                    <tr><td>FLOWER $K=1$ <em>(our rerun)</em></td><td>88.3 (530/600)</td><td>99.3 (596/600)</td><td><strong>94.3</strong></td></tr>
+                    <tr class="row-blue"><td>FLOWER + TEA $K=4$ <em>(ours)</em></td><td>89.3 (536/600)</td><td>100.0 (600/600)</td><td>91.7</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p style="margin:12px 0 0;color:var(--slate-600);font-size:0.93rem;">
+                On <strong>LIBERO-Object</strong> ($6\text{ seeds}\times 10\text{ tasks}\times 10\text{ eps} = 600$), TEA reaches <strong>60/60 on all 10 tasks</strong> (fixing all 4 baseline failures on <em>cream cheese</em>, 56&rarr;60; McNemar $p{=}0.125$). On <strong>Spatial</strong>, TEA improves 4 tasks, ties 5, and drops 1 on <em>wooden cabinet</em>. On <strong>Long</strong>, scoring only the first action ($C{=}1$) of 10-step flow chunks drops near the prior ceiling.
+              </p>
+            </div>
+            <div class="figure-card" style="padding:12px;">
+              <img src="./assets/fig_libero_pertask.png" alt="LIBERO per-task success rates for FLOWER K=1 vs TEA K=4" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Habitat 3.0 -->
+        <div class="bench-block habitat">
+          <div class="bench-header">
+            <h3>3. Habitat 3.0 Multi-Agent Social Navigation (DD-PPO Prior)</h3>
+            <span class="bench-tag">RSGG n=2, d=1 &middot; 5 seeds &times; 30 eps (n=150)</span>
+          </div>
+          <div class="grid-2" style="align-items:center;">
+            <div>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Arm</th><th>Finding $S\uparrow$</th><th>Following $F\uparrow$</th><th>Collision CR $\downarrow$</th><th>Encounter $T_{\text{enc}}\downarrow$</th></tr></thead>
+                  <tbody>
+                    <tr><td>DD-PPO $K=1$</td><td>0.68 &plusmn; .04</td><td>0.23 &plusmn; .02</td><td>0.55 &plusmn; .04</td><td>557</td></tr>
+                    <tr class="row-amber"><td>DD-PPO + TEA $K=4$</td><td>0.69 &plusmn; .04</td><td>0.25 &plusmn; .02</td><td>0.52 &plusmn; .04</td><td>502</td></tr>
+                    <tr><td>&nbsp;&nbsp;w/o RSGG neighbor block ($n{=}60$)</td><td>0.67 &plusmn; .06</td><td>0.18 &plusmn; .03</td><td>0.50 &plusmn; .06</td><td>603</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p style="margin:12px 0 0;color:var(--slate-600);font-size:0.93rem;">
+                All 4 metrics move favorably over the frozen prior (differences within 1 SE). Zeroing the 7-D humanoid RSGG block cuts following rate $F$ from $0.26 \to 0.18$ and slows encounter from $540 \to 603$ steps (matched 2 seeds, $n{=}60$), while reducing offline Cal-QL demo-vs-random margin by <strong>2.3&times;</strong> ($82.3$ vs. $35.6$ return units at 50k steps).
+              </p>
+            </div>
+            <div class="figure-card" style="padding:12px;">
+              <img src="./assets/fig_qnet_margin.png" alt="Habitat 3.0 Cal-QL demo-vs-random Q-margin curve for full 39-D RSGG vs neighbor-blind ablation" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Simulator Strip & 33 Videos -->
+    <section id="videos" class="section">
+      <div class="container">
+        <h2 class="section-title">Simulation Rollouts &amp; Demo Videos (Release <code>v1.0.0</code>)</h2>
+        <p class="section-lead">
+          All 33 captioned <code>.mp4</code> videos are hosted on <a href="https://github.com/1ncompleteness/TEA/releases/tag/v1.0.0" target="_blank" rel="noopener">GitHub Release <code>v1.0.0</code></a>. Provenance note: Habitat clips compare DD-PPO ($K{=}1$) and TEA ($K{=}4$) rollouts; CALVIN Scene D clips visualize tasks driven by a scripted closed-loop controller (not a learned policy; verified from scene state); LIBERO clips show benchmark demonstrations across LIBERO-Goal and LIBERO-Long.
+        </p>
+
+        <div class="grid-3" style="margin-bottom:26px;">
+          <div class="figure-card" style="padding:12px;">
+            <img src="./assets/env_habitat.jpg" alt="Habitat 3.0 Social-Nav rollout frames" />
+            <p class="figure-caption"><strong>Habitat 3.0 Social-Nav:</strong> start, mid-search, following a scripted humanoid.</p>
+          </div>
+          <div class="figure-card" style="padding:12px;">
+            <img src="./assets/env_calvin.jpg" alt="CALVIN Scene D interaction frames" />
+            <p class="figure-caption"><strong>CALVIN Scene D:</strong> initial, reaching, pressing button to toggle LED.</p>
+          </div>
+          <div class="figure-card" style="padding:12px;">
+            <img src="./assets/env_libero.jpg" alt="LIBERO Spatial and Long manipulation frames" />
+            <p class="figure-caption"><strong>LIBERO:</strong> Spatial, Object, and LIBERO-Long multi-step manipulation.</p>
+          </div>
+        </div>
+
+        <div class="filter-tabs" role="tablist" aria-label="Filter videos by environment">
+          <button type="button" class="tab-btn active" data-video-filter="habitat">Habitat 3.0 Social-Nav (4)</button>
+          <button type="button" class="tab-btn" data-video-filter="calvin">CALVIN Scene D (9)</button>
+          <button type="button" class="tab-btn" data-video-filter="libero_10">LIBERO-Long (10)</button>
+          <button type="button" class="tab-btn" data-video-filter="libero_goal">LIBERO-Goal (10)</button>
+          <button type="button" class="tab-btn" data-video-filter="all">Show All (33)</button>
+        </div>
+
+        <div id="video-grid" class="video-grid"></div>
+      </div>
+    </section>
+
+    <!-- In-Sample Diagnostics & Limitations -->
+    <section id="diagnostics" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">In-Sample Critic Diagnostics &amp; Scope Limitations</h2>
+        <p class="section-lead">
+          Audited via <a href="https://github.com/1ncompleteness/TEA/blob/main/code/trustworthy_calibration/compute_trust_calibration.py" target="_blank" rel="noopener"><code>compute_trust_calibration.py</code></a> on a random 10% subset of each critic&rsquo;s training buffer. Every trained critic achieves full coverage ($\text{Cov} = 1.00$) and positive demo-vs-random margin ($\Delta Q > 0$).
+        </p>
+
+        <div class="grid-2" style="align-items:start;">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Critic (Params)</th><th>$N$</th><th>ECE</th><th>Cov</th><th>$\Delta Q$</th><th>$\hat\delta$ (95th)</th><th>$\hat\varepsilon$</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>CALVIN D&rarr;D (1.29M)</td><td>20,000</td><td>1.06</td><td>1.00</td><td>1.64</td><td>0.36</td><td>3.49</td></tr>
+                <tr><td>LIBERO-Spatial (1.26M)</td><td>6,225</td><td>0.52</td><td>1.00</td><td>0.83</td><td>0.07</td><td>2.92</td></tr>
+                <tr><td>LIBERO-Object (1.26M)</td><td>7,450</td><td>0.50</td><td>1.00</td><td>0.94</td><td>0.04</td><td>2.84</td></tr>
+                <tr><td>LIBERO-Long (1.26M)</td><td>13,809</td><td>0.35</td><td>1.00</td><td>1.02</td><td>0.10</td><td>2.97</td></tr>
+                <tr><td>Habitat* (4&times;0.37M)</td><td>23,713</td><td>114.20</td><td>1.00</td><td>60.74</td><td>5.05</td><td>12.87</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card">
+            <h3>Honest Scope &amp; Limitations</h3>
+            <p style="line-height:1.7;">
+              &bull; <strong>Compute overhead:</strong> drawing $K{=}4$ candidates (plus anchor) multiplies prior inference cost 4&ndash;5&times;.<br/>
+              &bull; <strong>Statistical power:</strong> paired differences are small and none reaches significance under paired exact tests.<br/>
+              &bull; <strong>In-sample negatives:</strong> random chunks are easy negatives and do not prove near-support conservatism; ECE uses a chunk-reward proxy rather than full return-to-go (*Habitat uses dense returns of order $10^2$).<br/>
+              &bull; <strong>Open ablations:</strong> MLP vs. multilinear, no-Cal-QL critic, and multi-agent RSGG beyond $n{=}2$ remain future work.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quickstart -->
+    <section id="quickstart" class="section">
+      <div class="container">
+        <h2 class="section-title">3-Second CPU Smoke Test</h2>
+        <p class="section-lead">
+          All <a href="https://github.com/1ncompleteness/TEA/tree/main/trained_checkpoints" target="_blank" rel="noopener">pretrained Cal-QL critics</a> and 5,000-row <a href="https://github.com/1ncompleteness/TEA/tree/main/dataset" target="_blank" rel="noopener">subset buffers</a> ship directly in the repository so you can verify model loading and trust diagnostics without installing robotics simulators.
+        </p>
+
+        <div class="code-wrap">
+          <button type="button" class="copy-btn" data-copy-target="quickstart-code">Copy</button>
+          <pre id="quickstart-code">git clone https://github.com/1ncompleteness/TEA.git
+cd TEA
+pip install -r requirements.txt
+
+# 1. LIBERO-Spatial multilinear Q-network smoke test
+python code/trustworthy_calibration/compute_trust_calibration.py \
+  --ckpt trained_checkpoints/libero/libero_spatial_q_network_seed42/q_network.pt \
+  --chunk_npz dataset/libero/libero_spatial_chunk8_subset.npz \
+  --state_dim 15 --action_dim 7 --chunk_size 1 --num_actions 4 \
+  --hidden_dim 512 --label "LIBERO Spatial (smoke subset)"
+
+# 2. CALVIN D-&gt;D chunk-10 multilinear Q-network smoke test
+python code/trustworthy_calibration/compute_trust_calibration.py \
+  --ckpt trained_checkpoints/calvin/calvin_q_network_seed42/q_network.pt \
+  --chunk_npz dataset/calvin/calvin_dd_chunk10_subset.npz \
+  --state_dim 39 --action_dim 7 --chunk_size 10 --num_actions 4 \
+  --hidden_dim 512 --label "CALVIN D-&gt;D (smoke subset)"
+
+# 3. Habitat 3.0 Social-Nav 4-member Q-ensemble smoke test
+python code/trustworthy_calibration/compute_trust_calibration.py \
+  --ckpt trained_checkpoints/habitat/habitat_q_ensemble_full.pt \
+  --chunk_npz dataset/habitat/habitat_socialnav_chunk1_subset.npz \
+  --state_dim 39 --action_dim 2 --chunk_size 1 --num_actions 4 \
+  --use_ensemble --n_ensemble 4 --hidden_dim 256 \
+  --label "Habitat 3.0 Social-Nav (smoke subset)"</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- BibTeX -->
+    <section id="bibtex" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Citation</h2>
+        <div class="code-wrap">
+          <button type="button" class="copy-btn" data-copy-target="bibtex-code">Copy</button>
+          <pre id="bibtex-code">@inproceedings{baratib2026tea,
+  author    = {Barati B, Behrouz and Huang, Enno Qiuyuan},
+  title     = {{TEA}: Trustworthy Embodied Agents via Value-Guided Reranking of Behavior Priors},
+  booktitle = {14th International Conference on Robot Intelligence Technology and Applications (RiTA 2026), Work-in-Progress Papers},
+  year      = {2026},
+  url       = {https://1ncompleteness.github.io/TEA/}
+}</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p style="margin:0 0 6px;">
+        <strong>TEA: Trustworthy Embodied Agents</strong> &middot;
+        <a href="https://1ncompleteness.github.io/" target="_blank" rel="noopener">Behrouz Barati B</a> &amp;
+        <a href="https://github.com/EnnoHuang" target="_blank" rel="noopener">Enno Qiuyuan Huang</a> &middot; CSUN
+      </p>
+      <p style="margin:0;">
+        Released under the <a href="https://github.com/1ncompleteness/TEA/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a> &middot;
+        <a href="https://github.com/1ncompleteness/TEA" target="_blank" rel="noopener">GitHub</a> &middot;
+        <a href="https://github.com/1ncompleteness/TEA/releases/tag/v1.0.0" target="_blank" rel="noopener">Release v1.0.0</a> &middot;
+        <a href="./assets/TEA_Poster_A0.pdf" target="_blank" rel="noopener">Poster (A0 PDF)</a> &middot;
+        <a href="./assets/TEA_Poster_16x9.pdf" target="_blank" rel="noopener">Summary Slide (16:9 PDF)</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+</html>
